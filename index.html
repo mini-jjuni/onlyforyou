@@ -1,0 +1,41 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <title>Only for you</title>
+  </head>
+  <body>
+    <div class="topContainer">
+      <button class="button__music"><i class="fas fa-music"></i></button>
+
+      <audio id="player" loop>
+        <source src="res/bgm.mp3" type="audio/mp3" />
+      </audio>
+      <header class="header">
+        <h1>철민 <span class="heart">❤️</span> 수연</h1>
+        <h2>20.02.15 ~ 20.05.24</h2>
+      </header>
+      <main class="gallery"></main>
+    </div>
+    <div class="modal">
+      <button class="button__left">&lt;</button>
+
+      <div class="modal__frame">
+        <img src="#" class="modal__pic" />
+      </div>
+      <button class="button__right">&gt;</button>
+
+      <div class="modal__buttons"></div>
+    </div>
+    <script src="index.js"></script>
+    <script
+      src="https://kit.fontawesome.com/0ac70a1dad.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
