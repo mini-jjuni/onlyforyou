@@ -9,8 +9,9 @@ const bntRight = document.querySelector(".button__right");
 const bgmAudio = document.querySelector("audio");
 const bntMusic = document.querySelector(".button__music");
 
-let currentImg = 0;
-const last = 33;
+let currentImgId;
+const lastIdxArr = [33,22,56];
+const folderExt = ['JPG', 'JPEG', 'JPEG'];
 
 let isPlaying = false;
 
@@ -36,30 +37,58 @@ const closeModal = (event) => {
 const moveToPrevImg = (event) => {
   event.preventDefault();
 
-  currentImg = currentImg - 1;
+  let nextFolder, nextIndex;
+  const [folder, index] = currentImgId.split('/').map(v => parseInt(v));
 
-  if (currentImg === 0) {
-    currentImg = 33;
+  if(index === 1){
+    if(folder === 1) {
+      nextFolder = 3;
+      nextIndex = lastIdxArr[2];
+    } else {
+      nextFolder = folder - 1;
+      nextIndex = lastIdxArr[nextFolder-1];
+    }
+  } else {
+    nextFolder= folder;
+    nextIndex = index - 1;
   }
 
-  modalImg.src = `images/${currentImg}.JPG`;
+  currentImgId = `${nextFolder}/${nextIndex}`;
+
+  modalImg.src = `images/${currentImgId}-min.${folderExt[nextFolder-1]}`;
 };
+
 const moveToNextImg = (event) => {
   event.preventDefault();
 
-  currentImg = currentImg + 1;
+  let nextFolder, nextIndex;
+  const [folder, index] = currentImgId.split('/').map(v => parseInt(v));
 
-  if (currentImg === last + 1) {
-    currentImg = 1;
+  console.log(folder, index);
+
+  if(folder === 3 && index === lastIdxArr[2]) {
+    nextFolder = 1;
+    nextIndex = 1;
+  } else if (folder === 2 && index === lastIdxArr[1]){
+    nextFolder = folder + 1;
+    nextIndex = 1;
+  } else if (folder === 1&& index === lastIdxArr[0]) {
+    nextFolder = folder + 1; 
+    nextIndex = 1;
+  } else {
+    nextFolder= folder;
+    nextIndex = index + 1;
   }
 
-  modalImg.src = `images/${currentImg}.JPG`;
+  currentImgId = `${nextFolder}/${nextIndex}`;
+
+  modalImg.src = `images/${currentImgId}-min.${folderExt[nextFolder-1]}`;
 };
 
 const onClick = (event) => {
   event.preventDefault();
   const pic = event.target;
-  currentImg = parseInt(pic.id);
+  currentImgId = pic.id;
 
   modal.style.display = "flex";
 
@@ -67,19 +96,21 @@ const onClick = (event) => {
 };
 
 const paintPics = () => {
-  let num = 0;
-
-  for (num = 0; num < last; num++) {
-    const newPicFrame = document.createElement("div");
+  for (let folder = 1; folder <= 3; folder++) {
+    for (let index = 0; index < lastIdxArr[folder-1]; index++)
+{    
+  console.log("Test", lastIdxArr[folder-1], folder, index);
+  const newPicFrame = document.createElement("div");
     const newPic = new Image();
-    newPic.src = `images/${num + 1}.JPG`;
-    newPic.id = num + 1;
+    newPic.src = `images/${folder}/${index + 1}-min.${folderExt[folder-1]}`;
+    newPic.id = `${folder}/${index + 1}`;
     newPicFrame.classList.add("gallery__pic");
     newPicFrame.append(newPic);
 
     newPicFrame.addEventListener("click", onClick);
 
     gallery.append(newPicFrame);
+  }
   }
 };
 
